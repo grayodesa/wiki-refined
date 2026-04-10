@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --popup-bg: #faf9f6;
+      --popup-text: #1d1d1f;
+      --popup-text-muted: #8e8e93;
+      --popup-text-secondary: #5a5a5e;
+      --popup-accent: #0856a8;
+      --popup-border: #e5e5e7;
+      --popup-control-bg: #ffffff;
+      --popup-control-border: #d1d1d6;
+      --popup-hover-bg: #f0f0f0;
+      --popup-knob-shadow: rgba(0, 0, 0, 0.15);
+      --popup-accent-contrast: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --popup-bg: #1c1c1e;
+        --popup-text: #e4e4e7;
+        --popup-text-muted: #8a8a93;
+        --popup-text-secondary: #a1a1a6;
+        --popup-accent: #4a9eff;
+        --popup-border: #38383a;
+        --popup-control-bg: #2c2c2e;
+        --popup-control-border: #48484a;
+        --popup-hover-bg: #3a3a3c;
+        --popup-knob-shadow: rgba(0, 0, 0, 0.4);
+        --popup-accent-contrast: #1c1c1e;
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--popup-bg);
+      color: var(--popup-text);
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--popup-border);
+    }
+
+    .header-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--popup-accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    .header-text h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .header-text h1 span {
+      color: var(--popup-accent);
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: var(--popup-text-muted);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .toggle {
+      position: relative;
+      width: 42px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--popup-control-border);
+      border-radius: 12px;
+      transition: 0.2s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 2px;
+      bottom: 2px;
+      background: var(--popup-control-bg);
+      border-radius: 50%;
+      transition: 0.2s;
+      box-shadow: 0 1px 3px var(--popup-knob-shadow);
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: var(--popup-accent);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(18px);
+    }
+
+    .toggle input:focus-visible + .toggle-slider {
+      outline: 2px solid var(--popup-accent);
+      outline-offset: 2px;
+    }
+
+    .settings-group {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--popup-border);
+    }
+
+    .settings-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--popup-text-muted);
+      margin-bottom: 8px;
+    }
+
+    .font-size-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .font-size-control button {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--popup-control-border);
+      border-radius: 6px;
+      background: var(--popup-control-bg);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--popup-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.15s;
+    }
+
+    .font-size-control button:hover {
+      background: var(--popup-hover-bg);
+      border-color: var(--popup-text-muted);
+    }
+
+    .font-size-control button:focus-visible {
+      outline: 2px solid var(--popup-accent);
+      outline-offset: 1px;
+    }
+
+    .font-size-control span {
+      font-size: 13px;
+      font-weight: 500;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .width-control {
+      display: flex;
+      gap: 6px;
+    }
+
+    .width-control button {
+      flex: 1;
+      padding: 6px;
+      border: 1px solid var(--popup-control-border);
+      border-radius: 6px;
+      background: var(--popup-control-bg);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--popup-text-secondary);
+      transition: 0.15s;
+    }
+
+    .width-control button:hover {
+      background: var(--popup-hover-bg);
+    }
+
+    .width-control button:focus-visible {
+      outline: 2px solid var(--popup-accent);
+      outline-offset: 1px;
+    }
+
+    .width-control button.active {
+      background: var(--popup-accent);
+      border-color: var(--popup-accent);
+      color: var(--popup-accent-contrast);
+    }
+
+    .footer {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--popup-border);
+      font-size: 11px;
+      color: var(--popup-text-muted);
+      text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 5h16v2H4zm0 4h10v2H4zm0 4h16v2H4zm0 4h10v2H4z"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Wiki<span>Refined</span></h1>
+      <p>v1.0.0</p>
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <span class="toggle-label" id="toggle-label">Enable on Wikipedia</span>
+    <label class="toggle">
+      <input type="checkbox" id="toggle-enabled" checked aria-labelledby="toggle-label">
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <div class="settings-group" role="group" aria-labelledby="label-font-size">
+    <div class="settings-group-label" id="label-font-size">Font Size</div>
+    <div class="font-size-control">
+      <button id="font-decrease" aria-label="Decrease font size">A-</button>
+      <span id="font-size-display" aria-live="polite">18px</span>
+      <button id="font-increase" aria-label="Increase font size">A+</button>
+    </div>
+  </div>
+
+  <div class="settings-group" role="group" aria-labelledby="label-content-width">
+    <div class="settings-group-label" id="label-content-width">Content Width</div>
+    <div class="width-control">
+      <button data-width="640" class="width-btn" aria-pressed="false">Narrow</button>
+      <button data-width="740" class="width-btn active" aria-pressed="true">Medium</button>
+      <button data-width="860" class="width-btn" aria-pressed="false">Wide</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    Open source · No tracking · No ads
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

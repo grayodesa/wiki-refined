@@ -1,0 +1,728 @@
+/*
+ * Wiki Refined v2 — Clean Wikipedia reading experience
+ * Overrides Vector 2022 skin defaults
+ */
+
+:root {
+    /* Typography — user preferences */
+    --wr-font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --wr-font-heading: "JetBrains Mono", "Helvetica Neue", "Segoe UI", "Arial", sans-serif;
+    --wr-font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    --wr-font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+    /* Sizing */
+    --wr-body-size: 18px;
+    --wr-body-line-height: 1.6;
+    --wr-content-max-width: 740px;
+    --wr-toc-width: 240px;
+
+    /* Light theme colors */
+    --wr-bg: #eae1d5;
+    --wr-bg-content: #eae1d5;
+    --wr-text: #222222;
+    --wr-text-secondary: #555555;
+    --wr-text-muted: #655d54;
+    --wr-link: #1d4ed8;
+    --wr-link-hover: #1e40af;
+    --wr-link-visited: #6d28d9;
+    --wr-border: #e5e7eb;
+    --wr-border-light: #f3f4f6;
+    --wr-heading-color: #111111;
+    --wr-toc-bg: #fafafa;
+    --wr-toc-active: #2563eb;
+    --wr-toc-hover-bg: rgba(0, 0, 0, 0.03);
+    --wr-infobox-bg: #f9fafb;
+    --wr-infobox-header-bg: #f3f4f6;
+    --wr-code-bg: #f3f4f6;
+    --wr-blockquote-border: #d1d5db;
+    --wr-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================================
+   Dark mode
+   ============================================================ */
+html.skin-theme-clientpref-night,
+html[data-wr-theme="dark"] {
+    --wr-bg: #161618;
+    --wr-bg-content: #1c1c1e;
+    --wr-text: #e4e4e7;
+    --wr-text-secondary: #a1a1aa;
+    --wr-text-muted: #8A8A93;
+    --wr-link: #60a5fa;
+    --wr-link-hover: #93c5fd;
+    --wr-link-visited: #a78bfa;
+    --wr-border: #27272a;
+    --wr-border-light: #27272a;
+    --wr-heading-color: #fafafa;
+    --wr-toc-bg: #18181b;
+    --wr-toc-active: #60a5fa;
+    --wr-toc-hover-bg: rgba(255, 255, 255, 0.05);
+    --wr-infobox-bg: #27272a;
+    --wr-infobox-header-bg: #303033;
+    --wr-code-bg: #27272a;
+    --wr-blockquote-border: #3f3f46;
+    --wr-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+body.wr-active {
+    background: var(--wr-bg) !important;
+    color: var(--wr-text) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+}
+
+/* ============================================================
+   HIDE WIKIPEDIA CHROME — clean up noise
+   Including the native Appearance settings panel
+   ============================================================ */
+body.wr-active .vector-header-container,
+body.wr-active .vector-column-start,
+body.wr-active #vector-main-menu,
+body.wr-active #vector-main-menu-pinned-container,
+body.wr-active #vector-main-menu-unpinned-container,
+body.wr-active .vector-page-toolbar-container,
+body.wr-active #vector-page-tools-pinned-container,
+body.wr-active #vector-page-tools-unpinned-container,
+body.wr-active #vector-page-tools,
+body.wr-active .mw-footer,
+body.wr-active #p-cactions,
+body.wr-active #p-dock-bottom,
+body.wr-active .vector-sticky-header,
+body.wr-active #catlinks,
+body.wr-active .mw-editsection,
+body.wr-active .noprint:not(.mw-parser-output .noprint),
+body.wr-active .ambox,
+body.wr-active #siteNotice,
+body.wr-active .sistersitebox,
+body.wr-active #vector-toc-pinned-container,
+body.wr-active #vector-toc-unpinned-container,
+body.wr-active .vector-page-titlebar .vector-toc-landmark,
+body.wr-active #vector-appearance,
+body.wr-active #vector-appearance-pinned-container,
+body.wr-active #vector-appearance-unpinned-container,
+body.wr-active .vector-appearance,
+body.wr-active [id^="vector-appearance"],
+body.wr-active .vector-column-end {
+    display: none !important;
+}
+
+/* ============================================================
+   LAYOUT — TOC left, content offset right (Wikiwand-style)
+   ============================================================ */
+body.wr-active .mw-page-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.wr-active .mw-body {
+    max-width: var(--wr-content-max-width) !important;
+    margin: 0 auto 0 calc(var(--wr-toc-width) + 60px) !important;
+    padding: 40px 40px 80px !important;
+    border: none !important;
+}
+
+body.wr-active .vector-body-before-content {
+    display: none !important;
+}
+
+body.wr-active .mw-body-content {
+    max-width: 100% !important;
+}
+
+body.wr-active .mw-content-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.wr-active.vector-feature-limited-width-clientpref-1 .mw-body {
+    max-width: var(--wr-content-max-width) !important;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+body.wr-active .mw-body-content,
+body.wr-active .mw-parser-output {
+    font-family: var(--wr-font-body) !important;
+    font-size: var(--wr-body-size) !important;
+    line-height: var(--wr-body-line-height) !important;
+    color: var(--wr-text) !important;
+}
+
+body.wr-active .mw-parser-output p {
+    margin-bottom: 1.15em !important;
+    letter-spacing: -0.006em;
+}
+
+/* Title */
+body.wr-active .mw-first-heading {
+    font-family: var(--wr-font-heading) !important;
+    font-size: calc(var(--wr-body-size) * 2.2) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.03em !important;
+    color: var(--wr-heading-color) !important;
+    border: none !important;
+    margin: 0 0 0.15em !important;
+    padding: 0 !important;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+}
+
+/* Subtitle */
+body.wr-active #mw-content-subtitle {
+    font-family: var(--wr-font-ui) !important;
+    color: var(--wr-text-muted) !important;
+    font-size: 13px !important;
+    margin-bottom: 1.5em !important;
+}
+
+/* Headings */
+body.wr-active .mw-parser-output h2 {
+    font-family: var(--wr-font-heading) !important;
+    font-size: calc(var(--wr-body-size) * 1.5) !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--wr-heading-color) !important;
+    border-bottom: 1px solid var(--wr-border) !important;
+    padding-bottom: 0.35em !important;
+    margin: 1.8em 0 0.65em !important;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+}
+
+body.wr-active .mw-parser-output h3 {
+    font-family: var(--wr-font-heading) !important;
+    font-size: calc(var(--wr-body-size) * 1.15) !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.015em !important;
+    color: var(--wr-heading-color) !important;
+    margin: 1.5em 0 0.5em !important;
+    border: none !important;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+}
+
+body.wr-active .mw-parser-output h4 {
+    font-family: var(--wr-font-heading) !important;
+    font-size: var(--wr-body-size) !important;
+    font-weight: 600 !important;
+    color: var(--wr-heading-color) !important;
+    margin: 1.3em 0 0.4em !important;
+    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+}
+
+/* ============================================================
+   LINKS
+   ============================================================ */
+body.wr-active .mw-parser-output a:not(.image):not(.mw-file-description) {
+    color: var(--wr-link) !important;
+    text-decoration: none !important;
+    transition: color 0.12s ease;
+}
+
+body.wr-active .mw-parser-output a:not(.image):not(.mw-file-description):hover {
+    color: var(--wr-link-hover) !important;
+    text-decoration: underline !important;
+}
+
+body.wr-active .mw-parser-output a:visited:not(.image):not(.mw-file-description) {
+    color: var(--wr-link-visited) !important;
+}
+
+body.wr-active .mw-parser-output a.external {
+    background: none !important;
+    padding-right: 0 !important;
+}
+
+/* ============================================================
+   INFOBOX
+   ============================================================ */
+body.wr-active .mw-parser-output .infobox {
+    background: var(--wr-infobox-bg) !important;
+    border: 1px solid var(--wr-border) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--wr-shadow) !important;
+    font-size: 0.88em !important;
+    margin: 0 0 1.5em 2em !important;
+    max-width: 360px !important;
+    overflow: hidden;
+}
+
+body.wr-active .mw-parser-output .infobox th,
+body.wr-active .mw-parser-output .infobox .infobox-header {
+    background: var(--wr-infobox-header-bg) !important;
+    font-family: var(--wr-font-ui) !important;
+    font-weight: 600 !important;
+}
+
+body.wr-active .mw-parser-output .infobox td,
+body.wr-active .mw-parser-output .infobox th {
+    border-color: var(--wr-border-light) !important;
+    padding: 7px 12px !important;
+}
+
+body.wr-active .mw-parser-output .infobox .infobox-image img {
+    border-radius: 6px;
+}
+
+/* ============================================================
+   IMAGES & FIGURES
+   ============================================================ */
+body.wr-active .mw-parser-output .thumb {
+    border: none !important;
+    background: none !important;
+    margin: 1em 0 1em 1.5em !important;
+}
+
+body.wr-active .mw-parser-output .thumb.tleft {
+    margin: 1em 1.5em 1em 0 !important;
+}
+
+body.wr-active .mw-parser-output .thumbinner {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+body.wr-active .mw-parser-output .thumbimage {
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: var(--wr-shadow) !important;
+}
+
+body.wr-active .mw-parser-output .thumbcaption {
+    font-size: 0.84em !important;
+    color: var(--wr-text-muted) !important;
+    line-height: 1.45 !important;
+    padding: 6px 2px !important;
+    border: none !important;
+}
+
+body.wr-active .mw-parser-output .gallery .gallerybox .thumb img {
+    border-radius: 6px !important;
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+body.wr-active .mw-parser-output .wikitable {
+    background: var(--wr-bg-content) !important;
+    border: 1px solid var(--wr-border) !important;
+    border-radius: 10px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+    font-size: 0.9em !important;
+    box-shadow: var(--wr-shadow) !important;
+}
+
+body.wr-active .mw-parser-output .wikitable th {
+    background: var(--wr-infobox-header-bg) !important;
+    font-family: var(--wr-font-ui) !important;
+    font-weight: 600 !important;
+    font-size: 0.92em !important;
+    border-color: var(--wr-border-light) !important;
+    padding: 8px 12px !important;
+}
+
+body.wr-active .mw-parser-output .wikitable td {
+    border-color: var(--wr-border-light) !important;
+    padding: 7px 12px !important;
+}
+
+body.wr-active .mw-parser-output .wikitable tr:hover td {
+    background: var(--wr-toc-hover-bg) !important;
+}
+
+/* ============================================================
+   BLOCKQUOTES
+   ============================================================ */
+body.wr-active .mw-parser-output blockquote {
+    border-left: 3px solid var(--wr-blockquote-border) !important;
+    margin: 1.2em 0 !important;
+    padding: 0.3em 0 0.3em 1.2em !important;
+    color: var(--wr-text-secondary) !important;
+    font-style: italic !important;
+}
+
+/* ============================================================
+   CODE & PRE
+   ============================================================ */
+body.wr-active .mw-parser-output code,
+body.wr-active .mw-parser-output pre {
+    font-family: var(--wr-font-mono) !important;
+    background: var(--wr-code-bg) !important;
+    border-radius: 6px !important;
+    border: none !important;
+    font-size: 0.88em !important;
+}
+
+body.wr-active .mw-parser-output code {
+    padding: 2px 6px !important;
+}
+
+body.wr-active .mw-parser-output pre {
+    padding: 14px 18px !important;
+    overflow-x: auto;
+}
+
+/* ============================================================
+   LISTS
+   ============================================================ */
+body.wr-active .mw-parser-output ul,
+body.wr-active .mw-parser-output ol {
+    padding-left: 1.5em !important;
+    margin-bottom: 1em !important;
+}
+
+body.wr-active .mw-parser-output li {
+    margin-bottom: 0.3em !important;
+}
+
+/* ============================================================
+   REFERENCES / FOOTNOTES
+   ============================================================ */
+body.wr-active .mw-parser-output .reflist {
+    font-size: 0.82em !important;
+    color: var(--wr-text-secondary) !important;
+    line-height: 1.55 !important;
+}
+
+body.wr-active .mw-parser-output .reference {
+    font-size: 0.78em !important;
+    vertical-align: super !important;
+    line-height: 0 !important;
+}
+
+body.wr-active .mw-parser-output .reference a {
+    color: var(--wr-text-muted) !important;
+    font-weight: 500;
+}
+
+/* ============================================================
+   NAVBOXES / SEE ALSO / SUCCESSION BOXES
+   ============================================================ */
+body.wr-active .mw-parser-output .navbox,
+body.wr-active .mw-parser-output .succession-box,
+body.wr-active .mw-parser-output .metadata {
+    font-size: 0.85em !important;
+    border: 1px solid var(--wr-border-light) !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    margin: 1em 0 !important;
+}
+
+/* ============================================================
+   HATNOTE (disambiguation)
+   ============================================================ */
+body.wr-active .mw-parser-output .hatnote {
+    font-family: var(--wr-font-ui) !important;
+    font-size: 0.87em !important;
+    color: var(--wr-text-muted) !important;
+    font-style: italic !important;
+    padding: 0.4em 0 !important;
+    margin-bottom: 1em !important;
+    border: none !important;
+}
+
+/* ============================================================
+   CUSTOM STICKY TOC — LEFT side (Wikiwand-style)
+   ============================================================ */
+.wr-toc {
+    position: fixed;
+    top: 46px;
+    left: 0;
+    width: var(--wr-toc-width);
+    height: calc(100vh - 46px);
+    overflow-y: auto;
+    padding: 24px 16px 40px 24px;
+    font-family: var(--wr-font-ui);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--wr-text-secondary);
+    background: var(--wr-toc-bg);
+    border-right: 1px solid var(--wr-border);
+    z-index: 100;
+    box-sizing: border-box;
+    -ms-overflow-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--wr-border) transparent;
+}
+
+.wr-toc::-webkit-scrollbar {
+    width: 4px;
+}
+
+.wr-toc::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wr-toc::-webkit-scrollbar-thumb {
+    background: var(--wr-border);
+    border-radius: 2px;
+}
+
+.wr-toc-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--wr-text-muted);
+    margin-bottom: 10px;
+    padding-left: 8px;
+}
+
+.wr-toc ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.wr-toc li {
+    margin: 0 !important;
+}
+
+.wr-toc a {
+    display: block;
+    padding: 3px 8px;
+    color: var(--wr-text-secondary) !important;
+    text-decoration: none !important;
+    border-left: 2px solid transparent;
+    border-radius: 0 3px 3px 0;
+    transition: all 0.12s ease;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.wr-toc a:hover {
+    color: var(--wr-text) !important;
+    background: var(--wr-toc-hover-bg);
+    border-left-color: var(--wr-border);
+}
+
+.wr-toc a:focus-visible {
+    outline: 2px solid var(--wr-toc-active);
+    outline-offset: -2px;
+    border-radius: 3px;
+}
+
+.wr-toc a.wr-toc-active {
+    color: var(--wr-toc-active) !important;
+    font-weight: 600;
+    border-left-color: var(--wr-toc-active);
+    background: var(--wr-toc-hover-bg);
+}
+
+/* Nested TOC items */
+.wr-toc .wr-toc-h3 {
+    padding-left: 20px;
+    font-size: 12px;
+}
+
+.wr-toc .wr-toc-h4 {
+    padding-left: 32px;
+    font-size: 11.5px;
+    color: var(--wr-text-muted) !important;
+}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.wr-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 46px;
+    background: var(--wr-bg-content);
+    border-bottom: 1px solid var(--wr-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 200;
+    font-family: var(--wr-font-ui);
+}
+
+.wr-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.wr-topbar-logo {
+    font-family: var(--wr-font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--wr-text-muted);
+    letter-spacing: -0.03em;
+    user-select: none;
+}
+
+.wr-topbar-logo span {
+    color: var(--wr-link);
+}
+
+.wr-topbar-article-title {
+    font-size: 13px;
+    color: var(--wr-text-secondary);
+    font-weight: 500;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.wr-topbar-article-title.wr-visible {
+    opacity: 1;
+}
+
+.wr-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.wr-topbar-btn {
+    background: none;
+    border: 1px solid var(--wr-border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: var(--wr-font-ui);
+    font-size: 12px;
+    color: var(--wr-text-secondary);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.wr-topbar-btn:hover {
+    background: var(--wr-toc-hover-bg);
+    border-color: var(--wr-text-muted);
+    color: var(--wr-text);
+}
+
+.wr-topbar-btn:focus-visible {
+    outline: 2px solid var(--wr-toc-active);
+    outline-offset: 1px;
+}
+
+/* Push body content down for topbar */
+body.wr-active .mw-body {
+    padding-top: 72px !important;
+}
+
+/* ============================================================
+   READING PROGRESS BAR
+   ============================================================ */
+.wr-progress {
+    position: fixed;
+    top: 46px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--wr-toc-active);
+    z-index: 201;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.1s linear;
+    border-radius: 0 1px 1px 0;
+    will-change: transform;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (min-width: 1400px) {
+    body.wr-active .mw-body {
+        margin-left: calc(var(--wr-toc-width) + 80px) !important;
+        margin-right: auto !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .wr-toc {
+        display: none !important;
+    }
+
+    body.wr-active .mw-body {
+        max-width: 740px !important;
+        margin: 0 auto !important;
+    }
+}
+
+@media (max-width: 800px) {
+    body.wr-active .mw-body {
+        padding: 58px 20px 60px !important;
+    }
+
+    body.wr-active .mw-first-heading {
+        font-size: 1.8em !important;
+    }
+
+    body.wr-active .mw-body-content,
+    body.wr-active .mw-parser-output {
+        font-size: 17px !important;
+    }
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print {
+    .wr-toc,
+    .wr-topbar,
+    .wr-progress {
+        display: none !important;
+    }
+}
+
+/* ============================================================
+   SMOOTH TRANSITIONS — scoped to elements that change on theme switch
+   ============================================================ */
+body.wr-active .mw-body,
+body.wr-active .mw-body-content,
+body.wr-active .mw-parser-output,
+body.wr-active .wr-toc,
+body.wr-active .wr-toc a,
+body.wr-active .wr-topbar,
+body.wr-active .wr-topbar-btn,
+body.wr-active .wr-progress,
+body.wr-active .mw-parser-output .infobox th,
+body.wr-active .mw-parser-output .infobox .infobox-header,
+body.wr-active .mw-parser-output .wikitable th,
+body.wr-active .mw-parser-output blockquote,
+body.wr-active .mw-parser-output code,
+body.wr-active .mw-parser-output pre {
+    transition-property: background-color, color, border-color;
+    transition-duration: 0.12s;
+    transition-timing-function: ease;
+}
+
+/* ============================================================
+   REDUCED MOTION — respect user preference
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    body.wr-active *,
+    body.wr-active *::before,
+    body.wr-active *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
