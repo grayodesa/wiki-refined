@@ -3,5 +3,4 @@
 claudedocs/
 dist/
 *.zip
-store-assets/node_modules/
-store-assets/package-lock.json
+/store-assets/
