@@ -7,7 +7,7 @@ Clean, distraction-free Wikipedia reading experience. Better typography, focused
 ## What it does
 
 - **Removes clutter** — hides Wikipedia's navigation chrome, edit buttons, admin notices, footer
-- **Better typography** — Inter sans-serif for body text (system font fallback), JetBrains Mono for headings, proper line height and spacing
+- **Better typography** — Inter for body text, JetBrains Mono for headings, both bundled with the extension; proper line height and spacing
 - **Centered layout** — focused content column (adjustable width: 640/740/860px)
 - **Sticky TOC** — auto-generated table of contents pinned to the left side, highlights current section as you scroll
 - **Reading progress** — thin progress bar at the top shows how far you've read
@@ -35,16 +35,31 @@ The extension uses Manifest V3 which is supported in Firefox 109+. You may need 
 ```
 wiki-refined/
 ├── manifest.json     # Extension manifest (MV3)
-├── styles.css        # All CSS overrides (~500 lines)
-├── content.js        # TOC builder, scroll tracking, topbar
+├── styles.css        # All CSS overrides, @font-face declarations
+├── content.js        # TOC builder, scroll tracking, topbar, theme
+├── background.js     # Service worker: keyboard commands only
 ├── popup.html        # Settings popup UI
 ├── popup.js          # Settings logic
+├── fonts/            # Inter + JetBrains Mono (woff2) and their OFL licences
 ├── icons/
 │   ├── icon16.png
 │   ├── icon48.png
 │   └── icon128.png
+├── tests/            # Playwright smoke tests (npm test — needs network)
+├── CHANGELOG.md
+├── PRIVACY.md
 └── README.md
 ```
+
+## Tests
+
+```
+npm install
+npx playwright install chromium
+npm test
+```
+
+The tests load the unpacked extension into Playwright's Chromium and open live Wikipedia articles, so they need network access. Their job is to catch Wikipedia markup changes early.
 
 ## Keyboard shortcuts
 

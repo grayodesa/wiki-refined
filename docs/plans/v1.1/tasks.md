@@ -32,6 +32,6 @@
 - [x] 5.1 `toggleToc()`, выдвижная TOC ниже 1100px, `body.wr-toc-hidden` + CSS для широкого экрана, кнопка `#wr-btn-toc`, Escape
 - [x] 5.2 `background.js`, `commands` в manifest, `onMessage` в `content.js`, README, PRIVACY.md (tabs-формулировка + абзац про commands), `cp` в `store-assets/`
 - [x] 5.3 `getTocTitle()` из `#vector-toc .vector-pinnable-header-label`, assert в тесте
-- [ ] 5.4 Версия 1.1.0, CHANGELOG.md, README «Files», zip-команда в `.claude/settings.local.json`, `unzip -l`, `store-assets/listing.md` по списку мест из плана
-- [ ] Финальный `npm test` — вывод в отчёте
-- [ ] Коммит фазы 5
+- [x] 5.4 Версия 1.1.0, CHANGELOG.md, README «Files», zip-команда в `.claude/settings.local.json`, `unzip -l`, `store-assets/listing.md` по списку мест из плана
+- [x] Финальный `npm test` — 12 passed (11.6s), 2026-09-04
+- [x] Коммит фазы 5
