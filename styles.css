@@ -39,9 +39,9 @@
 }
 
 /* ============================================================
-   Dark mode
+   Dark mode — html[data-wr-theme] is set by content.js (auto/light/dark);
+   keying on Wikipedia's own class here would defeat a forced light theme.
    ============================================================ */
-html.skin-theme-clientpref-night,
 html[data-wr-theme="dark"] {
     --wr-bg: #161618;
     --wr-bg-content: #1c1c1e;

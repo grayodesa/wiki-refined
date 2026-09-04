@@ -16,11 +16,11 @@
 - [x] Коммит фазы 2
 
 ## Фаза 3 — тема
-- [ ] 3.1 `content.js`: `themePref`, `resolveTheme`, `applyTheme`, синхронный вызов при старте, `applyTheme` + `matchMedia` listener в `activate()`, `onChanged`, очистка в `deactivate`
-- [ ] 3.2 `styles.css:44`: убрать `html.skin-theme-clientpref-night`
-- [ ] 3.3 popup: группа Theme, `KEYS.theme`, `DEFAULTS.theme`
-- [ ] 3.4 PRIVACY.md таблица ключей + счётчик «four»; README; `tests/theme.spec.mjs`; `cp PRIVACY.md store-assets/privacy-policy.md`
-- [ ] Коммит фазы 3
+- [x] 3.1 `content.js`: `themePref`, `resolveTheme`, `applyTheme`, синхронный вызов при старте, `applyTheme` + `matchMedia` listener в `activate()`, `onChanged`, очистка в `deactivate`
+- [x] 3.2 `styles.css:44`: убрать `html.skin-theme-clientpref-night`
+- [x] 3.3 popup: группа Theme, `KEYS.theme`, `DEFAULTS.theme`
+- [x] 3.4 PRIVACY.md таблица ключей + счётчик «four»; README; `tests/theme.spec.mjs`; `cp PRIVACY.md store-assets/privacy-policy.md`
+- [x] Коммит фазы 3
 
 ## Фаза 4 — шрифты
 - [ ] Скачаны variable-woff2 Inter (roman + italic) и JetBrains Mono, лицензии в `fonts/`

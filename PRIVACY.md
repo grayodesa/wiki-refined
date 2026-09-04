@@ -10,7 +10,7 @@
 ## Short version
 
 Wiki Refined does not collect, transmit, or share any data about you.
-The only information the extension ever touches is **your own preferences** — font size, content column width, and whether the extension is enabled — stored locally in your browser via Chrome's standard storage API. Nothing leaves your device through this extension.
+The only information the extension ever touches is **your own preferences** — font size, content column width, theme, and whether the extension is enabled — stored locally in your browser via Chrome's standard storage API. Nothing leaves your device through this extension.
 
 ---
 
@@ -33,19 +33,20 @@ Wiki Refined is **not** a proxy, mirror, or rewriter. It does not fetch alternat
 
 ## Data we store locally
 
-Wiki Refined uses the standard [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/api/storage) API to persist three user preferences:
+Wiki Refined uses the standard [`chrome.storage.sync`](https://developer.chrome.com/docs/extensions/reference/api/storage) API to persist four user preferences:
 
 | Key | Purpose | Values |
 |---|---|---|
 | `wr-enabled` | Whether Wiki Refined restyles Wikipedia pages | `true` / `false` |
 | `wr-font-size` | Body font size | `13` to `23` (pixels) |
 | `wr-content-width` | Content column width | `640`, `740`, or `860` (pixels) |
+| `wr-theme` | Colour theme | `auto`, `light`, or `dark` |
 
 That's the entire scope of stored data. The extension never writes anything else.
 
 ### About `chrome.storage.sync`
 
-`chrome.storage.sync` is a standard Chrome API. If you have Chrome Sync enabled in your Google account, these three preference values will sync to your other signed-in Chrome browsers so the extension behaves consistently across devices. This syncing is handled by Chrome/Google itself — Wiki Refined has no access to any sync infrastructure and cannot see or transmit the synced values outside the API.
+`chrome.storage.sync` is a standard Chrome API. If you have Chrome Sync enabled in your Google account, these four preference values will sync to your other signed-in Chrome browsers so the extension behaves consistently across devices. This syncing is handled by Chrome/Google itself — Wiki Refined has no access to any sync infrastructure and cannot see or transmit the synced values outside the API.
 
 If you are **not** signed in to Chrome, or have disabled Chrome Sync, the preferences are stored only on the current device.
 
@@ -55,7 +56,7 @@ You can inspect or clear these values at any time at `chrome://sync-internals` o
 
 Wiki Refined requests one browser permission.
 
-- **`storage`** — to save the three user preferences listed above via `chrome.storage.sync`. Nothing else is stored. When you change a setting in the popup, open Wikipedia tabs pick it up through the standard storage change event; no script is injected into pages beyond the declared content script.
+- **`storage`** — to save the four user preferences listed above via `chrome.storage.sync`. Nothing else is stored. When you change a setting in the popup, open Wikipedia tabs pick it up through the standard storage change event; no script is injected into pages beyond the declared content script.
 
 Wiki Refined also declares **host permissions** restricted to Wikipedia:
 

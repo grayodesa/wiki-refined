@@ -12,8 +12,8 @@ Clean, distraction-free Wikipedia reading experience. Better typography, focused
 - **Sticky TOC** — auto-generated table of contents pinned to the left side, highlights current section as you scroll
 - **Reading progress** — thin progress bar at the top shows how far you've read
 - **Top bar** — minimal bar with article title (appears on scroll), quick toggle to disable, link to original page
-- **Dark mode** — respects Wikipedia's own dark mode toggle
-- **Customizable** — font size (13-23px, default 18px) and content width (640/740/860px) adjustable from popup
+- **Theme** — auto (follows Wikipedia's setting, then your OS), light, or dark; switch in the popup
+- **Customizable** — font size (13-23px, default 18px), content width (640/740/860px) and theme adjustable from popup
 
 ## Installation
 

@@ -17,13 +17,38 @@
   // ── State ──────────────────────────────────────────────────
   let isEnabled = true;
   const STORAGE_KEY = "wr-enabled";
+  const THEME_KEY = "wr-theme"; // "auto" | "light" | "dark"
+  let themePref = "auto";
   let scrollController = null;
   let spaObserver = null;
   let currentArticleTitle = "";
 
+  // ── Theme ──────────────────────────────────────────────────
+  // Single source of truth for styles.css is html[data-wr-theme]. Wikipedia's own
+  // appearance menu is hidden while the extension is active, so "auto" reads the
+  // class Wikipedia already put on <html>, falling back to the OS preference.
+  const darkMedia = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function resolveTheme(pref) {
+    if (pref === "light" || pref === "dark") return pref;
+    const html = document.documentElement;
+    if (html.classList.contains("skin-theme-clientpref-night")) return "dark";
+    if (html.classList.contains("skin-theme-clientpref-day")) return "light";
+    return darkMedia.matches ? "dark" : "light";
+  }
+
+  function applyTheme(pref) {
+    document.documentElement.dataset.wrTheme = resolveTheme(pref);
+  }
+
+  // Apply synchronously before the async storage read to avoid a light flash on dark pages.
+  applyTheme(themePref);
+
   // ── Init ───────────────────────────────────────────────────
-  chrome.storage.sync.get([STORAGE_KEY, "wr-font-size", "wr-content-width"], (result) => {
+  chrome.storage.sync.get([STORAGE_KEY, THEME_KEY, "wr-font-size", "wr-content-width"], (result) => {
     isEnabled = result[STORAGE_KEY] !== false; // default: enabled
+    themePref = result[THEME_KEY] || "auto";
+    if (!isEnabled) delete document.documentElement.dataset.wrTheme;
     if (isEnabled) {
       // Apply custom settings before activating
       if (result["wr-font-size"]) {
@@ -41,6 +66,10 @@
       isEnabled = changes[STORAGE_KEY].newValue !== false;
       isEnabled ? activate() : deactivate();
     }
+    if (changes[THEME_KEY]) {
+      themePref = changes[THEME_KEY].newValue || "auto";
+      if (isEnabled) applyTheme(themePref);
+    }
     if (changes["wr-font-size"]) {
       document.documentElement.style.setProperty("--wr-body-size", changes["wr-font-size"].newValue + "px");
     }
@@ -55,6 +84,8 @@
     scrollController = new AbortController();
 
     document.body.classList.add("wr-active");
+    applyTheme(themePref);
+    darkMedia.addEventListener("change", () => applyTheme(themePref), { signal: scrollController.signal });
     buildTopbar();
     buildTOC();
     buildProgressBar();
@@ -73,6 +104,7 @@
       spaObserver = null;
     }
     document.body.classList.remove("wr-active");
+    delete document.documentElement.dataset.wrTheme;
     removeElement(".wr-toc");
     removeElement(".wr-topbar");
     removeElement(".wr-progress");
