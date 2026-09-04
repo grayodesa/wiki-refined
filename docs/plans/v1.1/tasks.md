@@ -23,10 +23,10 @@
 - [x] Коммит фазы 3
 
 ## Фаза 4 — шрифты
-- [ ] Скачаны variable-woff2 Inter (roman + italic) и JetBrains Mono, лицензии в `fonts/`
-- [ ] `@font-face` в `styles.css`, `web_accessible_resources` в manifest
-- [ ] Assert `document.fonts.check` в `toc.spec.mjs`
-- [ ] Коммит фазы 4 (размер zip — в сообщении коммита)
+- [x] Скачаны woff2 (Inter variable roman+italic; JetBrains Mono статические 400/600/700 — variable-woff2 в релизе 2.304 нет) Inter (roman + italic) и JetBrains Mono, лицензии в `fonts/`
+- [x] `@font-face` в `styles.css`, `web_accessible_resources` в manifest
+- [x] Assert (через `document.fonts` status=loaded, `tests/fonts.spec.mjs`) вместо `document.fonts.check` в `toc.spec.mjs`
+- [x] Коммит фазы 4 (fonts/ = 1.0 MB)
 
 ## Фаза 5 — панель TOC, клавиши, заголовок, релиз
 - [ ] 5.1 `toggleToc()`, выдвижная TOC ниже 1100px, `body.wr-toc-hidden` + CSS для широкого экрана, кнопка `#wr-btn-toc`, Escape
