@@ -48,11 +48,16 @@ wiki-refined/
 
 ## Keyboard shortcuts
 
-None yet — planned for v1.1.
+| Shortcut | Action |
+|---|---|
+| `Alt+Shift+W` | Toggle Wiki Refined on/off |
+| `Alt+Shift+C` | Show / hide the table of contents (collapses it on wide screens, opens the drawer on narrow ones) |
+
+Rebind them at `chrome://extensions/shortcuts`.
 
 ## Known limitations
 
-- TOC is hidden on screens narrower than 1100px
+- On screens narrower than 1100px the TOC is a drawer: open it with the button in the top bar or `Alt+Shift+C`, close with Escape
 - Does not restyle Special: pages, Talk: pages, or edit mode
 - Wikipedia's own A/B tests may occasionally change class names
 - The "Original" button opens the page in a new tab with `?wr=off`; the extension stays off in that tab until you navigate away

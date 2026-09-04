@@ -4,6 +4,19 @@
   "version": "1.0.0",
   "description": "Clean, distraction-free Wikipedia reading experience. Better typography, focused layout, sticky TOC.",
   "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-enabled": {
+      "suggested_key": { "default": "Alt+Shift+W" },
+      "description": "Toggle Wiki Refined"
+    },
+    "toggle-toc": {
+      "suggested_key": { "default": "Alt+Shift+C" },
+      "description": "Show / hide table of contents"
+    }
+  },
   "content_scripts": [
     {
       "matches": [

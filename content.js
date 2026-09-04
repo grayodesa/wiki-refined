@@ -44,6 +44,34 @@
   // Apply synchronously before the async storage read to avoid a light flash on dark pages.
   applyTheme(themePref);
 
+  // ── TOC title & toggle ─────────────────────────────────────
+  const tocTitles = { en: "Contents", ru: "Содержание", uk: "Зміст", de: "Inhalt", fr: "Sommaire", es: "Contenido" };
+
+  function getTocTitle() {
+    // Wikipedia already localises its own (hidden) TOC header for every language.
+    const native = document.querySelector("#vector-toc .vector-pinnable-header-label")?.textContent.trim();
+    if (native) return native;
+    const lang = document.documentElement.lang || "en";
+    return tocTitles[lang] || tocTitles.en;
+  }
+
+  // Below 1100px the TOC is an overlay drawer (body.wr-toc-open); above, it can be
+  // collapsed to centre the article (body.wr-toc-hidden). One toggle serves the
+  // topbar button, the Escape key and the keyboard command from background.js.
+  const narrowMedia = window.matchMedia("(max-width: 1100px)");
+
+  function toggleToc() {
+    document.body.classList.toggle(narrowMedia.matches ? "wr-toc-open" : "wr-toc-hidden");
+  }
+
+  function closeTocDrawer() {
+    document.body.classList.remove("wr-toc-open");
+  }
+
+  chrome.runtime.onMessage.addListener((msg) => {
+    if (msg?.type === "wr-toggle-toc" && isEnabled) toggleToc();
+  });
+
   // ── Init ───────────────────────────────────────────────────
   chrome.storage.sync.get([STORAGE_KEY, THEME_KEY, "wr-font-size", "wr-content-width"], (result) => {
     isEnabled = result[STORAGE_KEY] !== false; // default: enabled
@@ -86,6 +114,13 @@
     document.body.classList.add("wr-active");
     applyTheme(themePref);
     darkMedia.addEventListener("change", () => applyTheme(themePref), { signal: scrollController.signal });
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape") closeTocDrawer();
+      },
+      { signal: scrollController.signal },
+    );
     buildTopbar();
     buildTOC();
     buildProgressBar();
@@ -103,7 +138,7 @@
       spaObserver.disconnect();
       spaObserver = null;
     }
-    document.body.classList.remove("wr-active");
+    document.body.classList.remove("wr-active", "wr-toc-open", "wr-toc-hidden");
     delete document.documentElement.dataset.wrTheme;
     removeElement(".wr-toc");
     removeElement(".wr-topbar");
@@ -133,6 +168,13 @@
         <div class="wr-topbar-article-title">${escapeHtml(getArticleTitle())}</div>
       </div>
       <div class="wr-topbar-right">
+        <button class="wr-topbar-btn" id="wr-btn-toc" title="Show / hide table of contents" aria-expanded="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          ${escapeHtml(getTocTitle())}
+        </button>
         <button class="wr-topbar-btn" id="wr-btn-original" title="View original Wikipedia page">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
@@ -163,6 +205,13 @@
     // Toggle button
     document.getElementById("wr-btn-toggle").addEventListener("click", () => {
       chrome.storage.sync.set({ [STORAGE_KEY]: false });
+    });
+
+    // TOC button (visible below 1100px via CSS, but always wired)
+    const tocBtn = document.getElementById("wr-btn-toc");
+    tocBtn.addEventListener("click", () => {
+      toggleToc();
+      tocBtn.setAttribute("aria-expanded", String(document.body.classList.contains("wr-toc-open")));
     });
   }
 
@@ -217,12 +266,7 @@
     toc.className = "wr-toc";
     toc.setAttribute("aria-label", "Table of Contents");
 
-    // Detect language for TOC title
-    const lang = document.documentElement.lang || "en";
-    const tocTitles = { en: "Contents", ru: "Содержание", uk: "Зміст", de: "Inhalt", fr: "Sommaire", es: "Contenido" };
-    const tocTitle = tocTitles[lang] || tocTitles.en;
-
-    let html = `<div class="wr-toc-title">${tocTitle}</div><ul>`;
+    let html = `<div class="wr-toc-title">${escapeHtml(getTocTitle())}</div><ul>`;
 
     headings.forEach((heading, i) => {
       const text = getHeadingText(heading);
@@ -255,6 +299,7 @@
         const top = target.getBoundingClientRect().top + window.scrollY - 60;
         window.scrollTo({ top, behavior: "smooth" });
       }
+      closeTocDrawer();
     });
   }
 

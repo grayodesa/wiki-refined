@@ -58,6 +58,8 @@ Wiki Refined requests one browser permission.
 
 - **`storage`** — to save the four user preferences listed above via `chrome.storage.sync`. Nothing else is stored. When you change a setting in the popup, open Wikipedia tabs pick it up through the standard storage change event; no script is injected into pages beyond the declared content script.
 
+Keyboard shortcuts (the manifest `commands` key, not a permission) are handled by a small background script that forwards the command to the Wikipedia tab you are looking at. It uses `chrome.tabs.sendMessage` on the active tab only; the `tabs` permission is not requested, so the script cannot see tab URLs or titles.
+
 Wiki Refined also declares **host permissions** restricted to Wikipedia:
 
 ```
@@ -74,7 +76,7 @@ Wiki Refined has no code and no permission to do any of the following. These are
 - Contact any third-party server.
 - Load or execute remote code.
 - Read or modify pages outside `*.wikipedia.org/wiki/*`.
-- Access your browsing history, bookmarks, tabs, or downloads.
+- Read your browsing history, bookmarks, the URLs or contents of your tabs, or downloads.
 - Access your clipboard, camera, microphone, location, or file system.
 - Collect any form of analytics, identifiers, or usage statistics.
 - Share any data with any third party, advertiser, or analytics provider.
