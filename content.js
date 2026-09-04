@@ -164,18 +164,13 @@
     const headings = Array.from(
       document.querySelectorAll(".mw-parser-output h2, .mw-parser-output h3, .mw-parser-output h4"),
     ).filter((h) => {
-      // Skip headings in collapsed boxes, navboxes, infoboxes, etc.
-      if (h.closest(".navbox, .mw-collapsible, .reflist, .references, .infobox, .sidebar, .metadata")) return false;
-      // Must be a direct child of mw-parser-output or inside mw-heading div (new Wikipedia)
-      const parent = h.parentElement;
-      const grandparent = parent?.parentElement;
-      const isDirectChild = parent?.classList.contains("mw-parser-output");
-      const isInHeadingDiv =
-        parent?.classList.contains("mw-heading") && grandparent?.classList.contains("mw-parser-output");
-      if (!isDirectChild && !isInHeadingDiv) return false;
+      // Exclusions first: collapsed boxes, navboxes, infoboxes, tables, footnotes
+      if (h.closest(".navbox, .mw-collapsible, .reflist, .references, .infobox, .sidebar, .metadata, table")) return false;
+      // Must belong to the article body. Depth is not checked on purpose: Parsoid wraps
+      // every section in <section>, so headings are never direct children of .mw-parser-output.
+      if (!h.closest(".mw-parser-output")) return false;
       // Skip empty headings
-      const text = getHeadingText(h);
-      return text.length > 0;
+      return getHeadingText(h).length > 0;
     });
 
     if (headings.length < 3) return; // Not worth showing TOC for very short articles
@@ -194,7 +189,6 @@
     headings.forEach((heading, i) => {
       const text = getHeadingText(heading);
       const level = heading.tagName.toLowerCase();
-      const id = heading.id || heading.querySelector(".mw-headline")?.id || `wr-heading-${i}`;
 
       // Ensure heading has an ID for scrolling
       if (!heading.id && !heading.querySelector("[id]")) {

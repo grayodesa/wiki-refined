@@ -4,3 +4,6 @@ claudedocs/
 dist/
 *.zip
 /store-assets/
+node_modules/
+test-results/
+playwright-report/

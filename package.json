@@ -1,0 +1,12 @@
+{
+  "name": "wiki-refined",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smoke tests for the Wiki Refined browser extension",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
+  }
+}
