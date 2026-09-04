@@ -114,6 +114,13 @@
     document.body.classList.add("wr-active");
     applyTheme(themePref);
     darkMedia.addEventListener("change", () => applyTheme(themePref), { signal: scrollController.signal });
+    // Crossing the 1100px breakpoint resets the TOC state: a collapsed wide-screen TOC
+    // must not stay display:none once it becomes a drawer, and vice versa.
+    narrowMedia.addEventListener(
+      "change",
+      () => document.body.classList.remove("wr-toc-hidden", "wr-toc-open"),
+      { signal: scrollController.signal },
+    );
     document.addEventListener(
       "keydown",
       (e) => {

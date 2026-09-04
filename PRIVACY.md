@@ -1,6 +1,6 @@
 # Privacy Policy — Wiki Refined
 
-**Effective date:** 2026-04-11
+**Effective date:** 2026-09-04 (v1.1.0; previous version 2026-04-11)
 **Extension:** Wiki Refined (Chrome Web Store)
 **Source code:** https://github.com/grayodesa/wiki-refined
 **Contact:** https://github.com/grayodesa/wiki-refined/issues
@@ -76,7 +76,7 @@ Wiki Refined has no code and no permission to do any of the following. These are
 - Contact any third-party server.
 - Load or execute remote code.
 - Read or modify pages outside `*.wikipedia.org/wiki/*`.
-- Read your browsing history, bookmarks, the URLs or contents of your tabs, or downloads.
+- Read your browsing history, bookmarks, downloads, or the URLs and titles of your tabs.
 - Access your clipboard, camera, microphone, location, or file system.
 - Collect any form of analytics, identifiers, or usage statistics.
 - Share any data with any third party, advertiser, or analytics provider.
