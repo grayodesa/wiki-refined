@@ -53,11 +53,9 @@ You can inspect or clear these values at any time at `chrome://sync-internals` o
 
 ## Permissions and why they exist
 
-Wiki Refined requests three browser permissions. Each one is used only for the extension's stated purpose.
+Wiki Refined requests one browser permission.
 
-- **`storage`** — to save the three user preferences listed above via `chrome.storage.sync`. Nothing else is stored.
-- **`scripting`** — used by the toolbar popup to push live CSS-variable updates into the active Wikipedia tab when you move the font size or width controls, so changes apply immediately without a page reload. The only code injected is a single-line `document.documentElement.style.setProperty(name, value)` call. No remote code is ever loaded or executed.
-- **`activeTab`** — grants the popup access to the currently focused tab *for the duration of the user-initiated interaction only*, so the live CSS-variable update can reach the Wikipedia page you are currently looking at.
+- **`storage`** — to save the three user preferences listed above via `chrome.storage.sync`. Nothing else is stored. When you change a setting in the popup, open Wikipedia tabs pick it up through the standard storage change event; no script is injected into pages beyond the declared content script.
 
 Wiki Refined also declares **host permissions** restricted to Wikipedia:
 
@@ -88,7 +86,7 @@ Wiki Refined does not collect any data, so no data about children (or anyone) is
 
 ## Changes to this policy
 
-If a future version of Wiki Refined changes what it stores or what permissions it needs, this policy will be updated in the same commit that introduces the change. The commit history on GitHub is the canonical record — see https://github.com/grayodesa/wiki-refined/commits/main/store-assets/privacy-policy.md
+If a future version of Wiki Refined changes what it stores or what permissions it needs, this policy will be updated in the same commit that introduces the change. The commit history on GitHub is the canonical record — see https://github.com/grayodesa/wiki-refined/commits/main/PRIVACY.md
 
 If a change would affect how your data is handled, it will also be announced in the release notes on the Chrome Web Store listing.
 

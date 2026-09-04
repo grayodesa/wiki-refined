@@ -45,7 +45,6 @@ function changeFontSize(delta) {
     const next = Math.max(13, Math.min(23, current + delta));
     chrome.storage.sync.set({ [KEYS.fontSize]: next });
     document.getElementById('font-size-display').textContent = next + 'px';
-    injectCSS(`--wr-body-size`, next + 'px');
   });
 }
 
@@ -61,21 +60,9 @@ document.querySelectorAll('.width-btn').forEach((btn) => {
     });
     btn.classList.add('active');
     btn.setAttribute('aria-pressed', 'true');
-
-    injectCSS('--wr-content-max-width', width + 'px');
   });
 });
 
-// ── Apply CSS variable to active tab ────────────────────────
-function injectCSS(varName, value) {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs[0]?.id) {
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id },
-        func: (name, val) => document.documentElement.style.setProperty(name, val),
-        args: [varName, value],
-      });
-    }
-  });
-}
+// Settings reach open Wikipedia tabs through chrome.storage.onChanged in content.js —
+// every tab, not just the active one — so no scripting/activeTab permission is needed.
 

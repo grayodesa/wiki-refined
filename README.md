@@ -55,7 +55,7 @@ None yet — planned for v1.1.
 - TOC is hidden on screens narrower than 1100px
 - Does not restyle Special: pages, Talk: pages, or edit mode
 - Wikipedia's own A/B tests may occasionally change class names
-- The "Original" button opens a new tab (it can't disable the extension per-tab)
+- The "Original" button opens the page in a new tab with `?wr=off`; the extension stays off in that tab until you navigate away
 
 ## Compared to Wikiwand
 

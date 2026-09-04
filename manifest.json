@@ -3,7 +3,7 @@
   "name": "Wiki Refined",
   "version": "1.0.0",
   "description": "Clean, distraction-free Wikipedia reading experience. Better typography, focused layout, sticky TOC.",
-  "permissions": ["storage", "scripting", "activeTab"],
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": [

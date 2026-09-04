@@ -10,6 +10,10 @@
   const bodyContent = document.getElementById("mw-content-text");
   if (!bodyContent) return;
 
+  // "Original" view: ?wr=off opts this tab out entirely. Returning before any
+  // storage read or listener means the popup cannot re-enable it here.
+  if (new URLSearchParams(window.location.search).get("wr") === "off") return;
+
   // ── State ──────────────────────────────────────────────────
   let isEnabled = true;
   const STORAGE_KEY = "wr-enabled";
@@ -117,9 +121,11 @@
 
     document.body.prepend(bar);
 
-    // "Original" button — opens in new tab without extension
+    // "Original" button — opens the same page in a new tab with ?wr=off (see top of file)
     document.getElementById("wr-btn-original").addEventListener("click", () => {
-      window.open(window.location.href, "_blank");
+      const original = new URL(window.location.href);
+      original.searchParams.set("wr", "off");
+      window.open(original.toString(), "_blank");
     });
 
     // Toggle button

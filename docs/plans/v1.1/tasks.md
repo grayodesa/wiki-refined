@@ -9,11 +9,11 @@
 - [x] Коммит фазы 1
 
 ## Фаза 2 — Original, permissions, PRIVACY
-- [ ] 2.1 `?wr=off` guard в `content.js`, кнопка Original ставит параметр, README «Known limitations»
-- [ ] 2.2 `manifest.json` permissions → `["storage"]`; `popup.js` без `injectCSS`; PRIVACY.md §Permissions; `store-assets/listing.md` §5 (локально)
-- [ ] 2.3 PRIVACY.md:91 ссылка → `PRIVACY.md`; копия в `store-assets/privacy-policy.md`
-- [ ] Ручная проверка: popup меняет шрифт/ширину в двух открытых вкладках Wikipedia без `scripting`
-- [ ] Коммит фазы 2
+- [x] 2.1 `?wr=off` guard в `content.js`, кнопка Original ставит параметр, README «Known limitations»
+- [x] 2.2 `manifest.json` permissions → `["storage"]`; `popup.js` без `injectCSS`; PRIVACY.md §Permissions; `store-assets/listing.md` §5 (локально)
+- [x] 2.3 PRIVACY.md:91 ссылка → `PRIVACY.md`; копия в `store-assets/privacy-policy.md`
+- [x] Проверка (автоматизирована вместо ручной): `tests/settings.spec.mjs` — popup меняет шрифт в двух вкладках без `scripting`, `?wr=off` оставляет страницу нетронутой
+- [x] Коммит фазы 2
 
 ## Фаза 3 — тема
 - [ ] 3.1 `content.js`: `themePref`, `resolveTheme`, `applyTheme`, синхронный вызов при старте, `applyTheme` + `matchMedia` listener в `activate()`, `onChanged`, очистка в `deactivate`
