@@ -6,6 +6,7 @@
 - Table of contents was missing on almost every article. Wikipedia now serves Parsoid markup that wraps sections in `<section>`, which the old heading filter rejected. The filter now checks container membership instead of nesting depth.
 - "Original" button opened the same restyled page. It now opens the article with `?wr=off`, which the content script honours by staying inactive in that tab.
 - Dead link in PRIVACY.md to the old policy location.
+- The article column now uses the extension's own background. Vector paints `.mw-page-container` white over the page, so the warm light background never reached the text and a forced dark theme showed light text on white. Modern `<figure>` thumbnails follow the theme as well.
 
 ### Added
 - Theme setting: auto (follows Wikipedia's own setting, then the OS), light, dark. Wikipedia's appearance menu is hidden while the extension is active, so this is the only way to switch.

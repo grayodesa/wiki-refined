@@ -34,6 +34,18 @@ test('forced dark and light override the page class', async ({ context, extensio
   await expect
     .poll(() => page.locator('.wr-topbar').evaluate((el) => getComputedStyle(el).backgroundColor))
     .toBe('rgb(28, 28, 30)'); // --wr-bg-content dark = #1c1c1e
+  // The surface the article text sits on must be ours, not Vector's white .mw-page-container:
+  // elementFromPoint in the empty gutter left of the text column, walking up to the first
+  // element with an opaque background.
+  const surface = await page.evaluate(() => {
+    let el = document.elementFromPoint(400, 400);
+    while (el && getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)') el = el.parentElement;
+    return el && getComputedStyle(el).backgroundColor;
+  });
+  expect(surface).toBe('rgb(22, 22, 24)'); // --wr-bg dark = #161618
+  // Modern <figure> thumbnails follow the theme too (Vector paints them light).
+  const figureBg = await page.locator('.mw-parser-output figure').first().evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(figureBg).toBe('rgb(39, 39, 42)'); // --wr-infobox-bg dark = #27272a
 
   await setTheme(context, extensionId, 'light');
   await expect(page.locator('html')).toHaveAttribute('data-wr-theme', 'light');

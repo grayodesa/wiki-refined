@@ -162,6 +162,10 @@ body.wr-active .mw-page-container {
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    /* Vector paints this container white on top of <body>; without this the warm
+       light background never reaches the text column and a forced dark theme
+       renders light text on white. */
+    background: var(--wr-bg) !important;
 }
 
 body.wr-active .mw-body {
@@ -355,6 +359,28 @@ body.wr-active .mw-parser-output .thumbcaption {
 
 body.wr-active .mw-parser-output .gallery .gallerybox .thumb img {
     border-radius: 6px !important;
+}
+
+/* Modern thumbnail markup: <figure typeof="mw:File/Thumb"> — Vector gives it a
+   light background and dark caption text that ignore our theme. */
+body.wr-active .mw-parser-output figure {
+    background: var(--wr-infobox-bg) !important;
+    border: 1px solid var(--wr-border) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--wr-shadow) !important;
+    overflow: hidden;
+}
+
+body.wr-active .mw-parser-output figure img {
+    border-radius: 6px;
+}
+
+body.wr-active .mw-parser-output figcaption {
+    background: transparent !important;
+    color: var(--wr-text-muted) !important;
+    font-size: 0.84em !important;
+    line-height: 1.45 !important;
+    border: none !important;
 }
 
 /* ============================================================
