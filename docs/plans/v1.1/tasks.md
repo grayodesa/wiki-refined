@@ -5,7 +5,7 @@
 ## Фаза 1 — TOC + smoke-тест
 - [x] 1.1 `content.js` `buildTOC`: фильтр через `closest`, исключения первыми, `table` добавлен, мёртвые переменные убраны
 - [x] 1.2 `package.json`, `playwright.config.mjs`, `tests/fixtures.mjs`, `tests/toc.spec.mjs`, `.gitignore`
-- [x] 1.3 Доказательство: тест падает на старом `content.js`, проходит на новом (вывод обоих прогонов в отчёте)
+- [x] 1.3 Доказательство (2026-09-04): на `content.js` из `main` — 3 failed, все на `expect(locator('.wr-toc')).toBeVisible()` → `element(s) not found` (`.wr-topbar`/`.wr-progress` при этом найдены); после фикса — 3 passed (2.7s)
 - [x] Коммит фазы 1
 
 ## Фаза 2 — Original, permissions, PRIVACY

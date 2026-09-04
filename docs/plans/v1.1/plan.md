@@ -104,7 +104,7 @@
 - `PRIVACY.md` таблица ключей: добавить `wr-theme` — `auto` / `light` / `dark`; «three user preferences» → four (в «Short version» и §«Data we store locally»).
 - README: «Dark mode — respects Wikipedia's own dark mode toggle» → «Theme — auto (follows Wikipedia / system), light, dark; switch in popup».
 - `store-assets/privacy-policy.md` ← повторный `cp PRIVACY.md` в этом же коммите (копия из фазы 2 устареет с появлением ключа).
-- Тест: `tests/theme.spec.mjs` — после `page.emulateMedia({ colorScheme: 'dark' })` и загрузки статьи `html` имеет `data-wr-theme="dark"`; после `chrome.storage.sync.set({'wr-theme':'light'})` через `context.serviceWorkers()`/popup-страницу — `"light"`. Если запись в storage из теста окажется неудобной без service worker, ограничиться проверкой auto-режима и записать это в отчёт.
+- Тест: `tests/theme.spec.mjs`. Anonymous-читателю Wikipedia ставит `skin-theme-clientpref-day` (fetch 2026-09-04), поэтому по `resolveTheme` выше auto = `"light"` даже при `page.emulateMedia({ colorScheme: 'dark' })` — это и проверяется (первоначальная формулировка «ожидается dark» противоречила собственному псевдокоду и исправлена при исполнении). Далее через popup-страницу (`chrome-extension://<id>/popup.html`, id выведен из пути в `tests/fixtures.mjs`) выставляются `dark` → атрибут `"dark"` и фон топбара `rgb(28, 28, 30)`, затем `light`, затем `auto`; третий тест — тема переживает disable → enable.
 
 ## Фаза 4 — шрифты в пакете
 
